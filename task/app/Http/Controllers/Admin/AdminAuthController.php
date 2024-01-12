@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Interfaces\Admin\AdminAuthInterface;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +22,7 @@ class AdminAuthController extends Controller
 
         return $this->AdminAuthInterface->ShowLogin();
     }
-    public function Login(Request $request)
+    public function Login(LoginRequest $request)
     {
         return $this->AdminAuthInterface->Login($request);
     }
@@ -28,7 +30,7 @@ class AdminAuthController extends Controller
     {
         return $this->AdminAuthInterface->ShowRegister();
     }
-    public function Registrt(Request $request)
+    public function Registrt(RegisterRequest $request)
     {
         return $this->AdminAuthInterface->Registrt($request);
     }

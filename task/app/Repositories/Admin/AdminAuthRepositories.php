@@ -5,6 +5,8 @@ namespace App\Repositories\Admin;
 use App\Interfaces\Admin\AdminAuthInterface;
 use App\Providers\RouteServiceProvider;
 use App\Models\Admin;
+use App\Http\Requests\RegisterRequest;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -18,7 +20,10 @@ class AdminAuthRepositories implements AdminAuthInterface
     public function Login($request)
     {
         if (!Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            return 'not exist';
+
+            throw ValidationException::withMessages([
+                'email' => trans('auth.failed'),
+            ]);
         }
         return redirect(RouteServiceProvider::HOME);
     }
@@ -35,7 +40,7 @@ class AdminAuthRepositories implements AdminAuthInterface
             'name' => $request->name
         ]);
 
-        Auth::login($admin);
+
 
         return redirect()->route('admin.index');
     }
